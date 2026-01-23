@@ -1,10 +1,16 @@
-﻿namespace WebShop
+﻿using WebShop.Data;
+using WebShop.Services;
+namespace WebShop
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            
+            using (var db = new Data.MyDbContext())
+            {
+                DbInitializer.Initializer(db);
+                UserInterface.Startsida();
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebShop.Data;
 
@@ -10,9 +11,11 @@ using WebShop.Data;
 namespace WebShop.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260122123610_Added modelBuilder")]
+    partial class AddedmodelBuilder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,28 +71,15 @@ namespace WebShop.Migrations
                     b.Property<int>("InStock")
                         .HasColumnType("int");
 
-                    b.Property<string>("LifeCycle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Sunlight")
                         .HasColumnType("int");
-
-                    b.Property<string>("ScientificName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sunlight")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Water")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
