@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebShop.Data;
 
@@ -11,9 +12,11 @@ using WebShop.Data;
 namespace WebShop.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260128144127_Added Order and OrderItem")]
+    partial class AddedOrderandOrderItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +47,6 @@ namespace WebShop.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -81,55 +81,6 @@ namespace WebShop.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WebShop.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerAdress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerCity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("CustomerNewsLetter")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CustomerPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastOrder")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customers");
-                });
-
             modelBuilder.Entity("WebShop.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -145,15 +96,9 @@ namespace WebShop.Migrations
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCanceld")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("Newsletter")
                         .HasColumnType("bit");
@@ -174,8 +119,6 @@ namespace WebShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("Orders");
                 });
 
@@ -191,9 +134,6 @@ namespace WebShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("PriceAtPurchase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -225,12 +165,6 @@ namespace WebShop.Migrations
                     b.Property<int>("InStock")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsOnDisplay")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOnPage")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LifeCycle")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)");
@@ -254,35 +188,9 @@ namespace WebShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("WholesalerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("WholesalerId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("WebShop.Models.Wholesaler", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Wholesalers");
                 });
 
             modelBuilder.Entity("ProductCategory", b =>
@@ -311,15 +219,6 @@ namespace WebShop.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebShop.Models.Order", b =>
-                {
-                    b.HasOne("WebShop.Models.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId");
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("WebShop.Models.OrderItem", b =>
                 {
                     b.HasOne("WebShop.Models.Order", "Order")
@@ -331,20 +230,6 @@ namespace WebShop.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("WebShop.Models.Product", b =>
-                {
-                    b.HasOne("WebShop.Models.Wholesaler", "Wholesaler")
-                        .WithMany("Products")
-                        .HasForeignKey("WholesalerId");
-
-                    b.Navigation("Wholesaler");
-                });
-
-            modelBuilder.Entity("WebShop.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("WebShop.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -353,11 +238,6 @@ namespace WebShop.Migrations
             modelBuilder.Entity("WebShop.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
-                });
-
-            modelBuilder.Entity("WebShop.Models.Wholesaler", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

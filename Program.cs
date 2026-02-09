@@ -1,5 +1,8 @@
 ﻿using WebShop.Data;
+using WebShop.Models;
 using WebShop.Services;
+using Microsoft.EntityFrameworkCore;
+
 namespace WebShop
 {
     internal class Program
@@ -8,8 +11,12 @@ namespace WebShop
         {
             using (var db = new Data.MyDbContext())
             {
-                DbInitializer.Initializer(db);
-                UserInterface.Startsida();
+                await DbInitializer.Initializer(db);
+                
+                await UserInterface.Start(db);
+                //Helpers.TextHelpers.ToCenter();
+                //ProductManager.ProductView();
+                //EFRepository.DeleteAllOrders(db);
             }
         }
     }

@@ -27,5 +27,28 @@ namespace WebShop.Models
             Medium, 
             High
         }
-    
+        public enum Align 
+        { 
+            Left, 
+            Center, 
+            Right 
+        }
+        public enum Role //För att framtidssäkra och visa varförr jag valt enum och inte bool
+        {
+            Customer,
+            Admin,
+            WarehouseStaff,
+            CustomerSupport
+        }
+        public enum AdminMenu
+        {
+            Kategorihantering = '1',
+            Produkthantering,
+            Kundhantering,
+            OnDisplayIsOnPage,
+            Statistik,
+            Lagerstatus,
+            Utloggning
+        }
+
 }

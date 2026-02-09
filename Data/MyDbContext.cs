@@ -16,7 +16,7 @@ namespace WebShop.Data
             var config = new ConfigurationBuilder()
             .AddUserSecrets<Program>()
             .Build();
-            var connStr = config["MySettings:EFConnectionString"];
+            var connStr = config["MySettings:ConnectionString"];
             optionsBuilder.UseSqlServer(connStr);
         }
 
@@ -50,8 +50,11 @@ namespace WebShop.Data
                 });           
         }
         public DbSet<Product> Products {get; set;}
-
         public DbSet<Category> Categories {get; set;}
-
+        public DbSet<CartItem> CartItems {get; set;}
+        public DbSet<Order> Orders {get; set;}
+        public DbSet<OrderItem> OrderItems {get; set;}
+        public DbSet<Customer> Customers {get; set;}
+        public DbSet<Wholesaler> Wholesalers {get; set;}
     }
 }
